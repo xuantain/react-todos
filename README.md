@@ -6,7 +6,7 @@ This project was bootstrapped with [Vite](https://vite.dev/).
 
 In the project directory, you can run:
 
-### `npm dev`
+### `npm run dev`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
