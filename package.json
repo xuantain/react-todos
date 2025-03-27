@@ -1,6 +1,6 @@
 {
-  "name": "todo-app",
-  "private": true,
+  "name": "react-todos",
+  "license": "MIT",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
