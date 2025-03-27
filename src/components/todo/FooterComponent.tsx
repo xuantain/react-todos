@@ -1,18 +1,16 @@
-import { useContext } from "react";
-import { AuthContext } from "./security/AuthContext";
+import { useContext } from 'react';
+import { AuthContext } from './security/AuthContext';
 
 function FooterComponent() {
-    const authContext = useContext(AuthContext)
+  const authContext = useContext(AuthContext);
 
-    console.log(`Footer component - ${authContext.number}`);
+  console.log(`Footer component - ${authContext.number}`);
 
-    return (
-        <footer className="footer border-top border-light border-5 mb-2 p-2">
-            <div className="container">
-                Footer
-            </div>
-        </footer>
-    )
+  return (
+    <footer className="footer border-top border-light border-5 mb-2 p-2">
+      <div className="container">Footer</div>
+    </footer>
+  );
 }
 
-export default FooterComponent
+export default FooterComponent;
