@@ -35,10 +35,7 @@
     "extends": [
       "react-app",
       "prettier"
-    ],
-    "rules": {
-      "no-unused-vars": "warn"
-    }
+    ]
   },
   "prettier": {
     "tabWidth": 2,
