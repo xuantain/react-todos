@@ -11,6 +11,9 @@
 # production
 /build
 
+# api
+api/*.jar
+
 # misc
 .DS_Store
 .env.local
