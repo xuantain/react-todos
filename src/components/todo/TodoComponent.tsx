@@ -58,7 +58,7 @@ export default function TodoComponent() {
   }
 
   function validate(values) {
-    let errors = {
+    const errors = {
       // description: 'Enter a valid description',
       // targetDate: 'Enter a valid target date'
     };
