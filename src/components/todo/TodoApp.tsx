@@ -11,9 +11,10 @@ import TodoComponent from './TodoComponent';
 import ErrorComponent from './ErrorComponent.jsx';
 import WelcomeComponent from './WelcomeComponent';
 import AuthProvider, { useAuth } from './security/AuthContext.js';
+import { ReactNode } from 'react';
 
 // {/* Create a wrap component to Protect Routes */}
-function AuthenticatedRoute({ children }) {
+function AuthenticatedRoute({ children }: { children: ReactNode }) {
   const authContext = useAuth();
 
   if (authContext.isAuthenticated) {

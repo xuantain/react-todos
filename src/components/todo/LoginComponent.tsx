@@ -11,14 +11,6 @@ export default function LoginComponent() {
   const navigate = useNavigate();
   const authContext = useAuth();
 
-  function handleUsernameChange(event) {
-    setUsername(event.target.value);
-  }
-
-  function handlePasswordChange(event) {
-    setPassword(event.target.value);
-  }
-
   async function handleSubmit() {
     const isAuthenticated = await authContext.login(username, password);
 
@@ -49,7 +41,7 @@ export default function LoginComponent() {
               className="form-control"
               name="username"
               value={username}
-              onChange={handleUsernameChange}
+              onChange={(event) => setUsername(event.target.value)}
             />
           </div>
         </div>
@@ -63,7 +55,7 @@ export default function LoginComponent() {
               className="form-control"
               name="password"
               value={password}
-              onChange={handlePasswordChange}
+              onChange={(event) => setPassword(event.target.value)}
             />
           </div>
         </div>

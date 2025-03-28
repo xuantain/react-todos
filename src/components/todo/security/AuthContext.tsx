@@ -3,17 +3,17 @@ import { executeBasicAuthenticationService } from '../api/AuthenticationApiServi
 import { apiClient } from '../api/ApiClient';
 
 interface AuthContextType {
-  username: string | null;
+  username: string;
+  token: string;
   isAuthenticated: boolean;
-  token: string | null;
   login: (username: string, password: string) => Promise<boolean>;
   logout: () => void;
 }
 
 export const AuthContext = createContext<AuthContextType>({
-  username: null,
+  username: '',
   isAuthenticated: false,
-  token: null,
+  token: '',
   login: async () => false,
   logout: () => {},
 });
@@ -26,8 +26,8 @@ interface AuthProviderProps {
 
 export default function AuthProvider({ children }: AuthProviderProps) {
   const [isAuthenticated, setAuthenticated] = useState<boolean>(false);
-  const [username, setUsername] = useState<string | null>(null);
-  const [token, setToken] = useState<string | null>(null);
+  const [username, setUsername] = useState<string>('');
+  const [token, setToken] = useState<string>('');
 
   async function login(username: string, password: string): Promise<boolean> {
     try {
@@ -58,8 +58,8 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
   function logout() {
     setAuthenticated(false);
-    setUsername(null);
-    setToken(null);
+    setUsername('');
+    setToken('');
   }
 
   return (

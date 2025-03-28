@@ -10,27 +10,12 @@ export default function WelcomeComponent() {
   // const params = useParams()
   // const username = params.username
   // const { username } = useParams();
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState('');
 
   function callRestApi() {
-    // retrieveHelloWorldBean()
-    //     .then((res) => successfulResponse(res))
-    //     .catch((err) => errorResponse(err))
-    //     .finally(() => console.log('cleanup'))
-
     retrieveHelloWorldPathVariable(username, token)
-      .then((res) => successfulResponse(res))
-      .catch((err) => errorResponse(err))
-      .finally(() => console.log('cleanup'));
-  }
-
-  function successfulResponse(response) {
-    console.log(response);
-    setMessage(response.data.message);
-  }
-
-  function errorResponse(error) {
-    console.log(error);
+      .then((res) => setMessage(res.data.message))
+      .catch((err) => console.log(err));
   }
 
   return (
