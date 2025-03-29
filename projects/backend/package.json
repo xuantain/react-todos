@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "docker compose up",
-    "start": "docker compose up"
+    "start": "docker compose up",
+    "build": "echo build"
   }
 }
