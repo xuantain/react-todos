@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import './globals.css';
+import '@/lib/tailwind.css';
 
 export const metadata: Metadata = {
   title: 'React Todos',
