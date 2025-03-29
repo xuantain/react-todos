@@ -2,11 +2,18 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { retrieveTodoApi, updateTodoApi, createTodoApi } from './api/TodoApiService';
 import { useAuth } from './security/AuthContext';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, FormikErrors } from 'formik';
 import moment from 'moment';
 
+interface FormValues {
+  description: string;
+  targetDate: string;
+}
+
 export default function TodoComponent() {
-  const { id } = useParams();
+  const param = useParams();
+
+  const id = Number(param.id);
 
   const [description, setDescription] = useState('');
   const [targetDate, setTargetDate] = useState('');
@@ -29,7 +36,7 @@ export default function TodoComponent() {
     }
   }
 
-  function onSubmit(values) {
+  function onSubmit(values: FormValues) {
     console.log(values);
 
     const todo = {
@@ -57,11 +64,8 @@ export default function TodoComponent() {
     }
   }
 
-  function validate(values) {
-    const errors = {
-      // description: 'Enter a valid description',
-      // targetDate: 'Enter a valid target date'
-    };
+  function validate(values: FormValues) {
+    const errors: FormikErrors<FormValues> = {};
 
     if (values.description.length < 5) {
       errors.description = 'Enter atleast 5 characters';
@@ -71,7 +75,6 @@ export default function TodoComponent() {
       errors.targetDate = 'Enter a target date';
     }
 
-    console.log(values);
     return errors;
   }
 
@@ -80,25 +83,25 @@ export default function TodoComponent() {
       <h1>Enter Todo Details </h1>
       <div>
         <Formik
-          initialValues={{ description, targetDate }}
+          initialValues={{ description, targetDate } as FormValues}
           enableReinitialize={true}
           onSubmit={onSubmit}
           validate={validate}
           validateOnChange={false}
           validateOnBlur={false}
         >
-          {(props) => (
+          {() => (
             <Form>
               <ErrorMessage name="description" component="div" className="alert alert-warning" />
 
               <ErrorMessage name="targetDate" component="div" className="alert alert-warning" />
 
               <fieldset className="form-group">
-                <label for="description">Description</label>
+                <label htmlFor="description">Description</label>
                 <Field type="text" className="form-control" name="description" />
               </fieldset>
               <fieldset className="form-group">
-                <label for="targetDate">Target Date</label>
+                <label htmlFor="targetDate">Target Date</label>
                 <Field type="date" className="form-control" name="targetDate" />
               </fieldset>
               <div>

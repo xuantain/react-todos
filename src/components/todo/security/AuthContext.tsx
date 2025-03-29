@@ -1,28 +1,40 @@
-import { useState, useContext, createContext } from 'react';
-import { executeJwtAuthenticationService, executeBasicAuthenticationService } from '../api/AuthenticationApiService';
+import { useState, useContext, createContext, ReactNode } from 'react';
+import { executeBasicAuthenticationService } from '../api/AuthenticationApiService';
 import { apiClient } from '../api/ApiClient';
 
-// 1 create context
-export const AuthContext = createContext();
-export const useAuth = () => useContext(AuthContext); // this creates a new hook useAuth
+interface AuthContextType {
+  username: string;
+  token: string;
+  isAuthenticated: boolean;
+  login: (username: string, password: string) => Promise<boolean>;
+  logout: () => void;
+}
 
-// 2 Put some state in the context
-// Share the created context with other components
+export const AuthContext = createContext<AuthContextType>({
+  username: '',
+  isAuthenticated: false,
+  token: '',
+  login: async () => false,
+  logout: () => {},
+});
 
-export default function AuthProvider({ children }) {
-  const [isAuthenticated, setAuthenticated] = useState(false);
-  const [username, setUsername] = useState(null);
-  const [token, setToken] = useState(null);
+export const useAuth = () => useContext(AuthContext);
 
-  async function login(username, password) {
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export default function AuthProvider({ children }: AuthProviderProps) {
+  const [isAuthenticated, setAuthenticated] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>('');
+  const [token, setToken] = useState<string>('');
+
+  async function login(username: string, password: string): Promise<boolean> {
     try {
       const baToken = 'Basic ' + window.btoa(username + ':' + password);
       const response = await executeBasicAuthenticationService(baToken);
-      // const response = await executeJwtAuthenticationService(username, password)
 
-      if (response.status == 200) {
-        // const jwtToken = 'Bearer ' + response.data.token
-
+      if (response.status === 200) {
         setAuthenticated(true);
         setUsername(username);
         setToken(baToken);
@@ -46,11 +58,11 @@ export default function AuthProvider({ children }) {
 
   function logout() {
     setAuthenticated(false);
-    setUsername(null);
-    setToken(null);
+    setUsername('');
+    setToken('');
   }
 
-  const valueToBeShared = { username, isAuthenticated, token, login, logout };
-
-  return <AuthContext.Provider value={valueToBeShared}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ username, isAuthenticated, token, login, logout }}>{children}</AuthContext.Provider>
+  );
 }

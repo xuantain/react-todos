@@ -1,20 +1,19 @@
 import { useState, useEffect } from 'react';
-import { retrieveAllTodosForUsernameApi, deleteTodoApi, updateTodoApi } from './api/TodoApiService';
+import { retrieveAllTodosForUsernameApi, deleteTodoApi, TodoItem } from './api/TodoApiService';
 import { useAuth } from './security/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 export default function ListTodoComponents() {
   const authContext = useAuth();
   const username = authContext.username;
-  const token = authContext.token;
 
   const navigate = useNavigate();
 
-  const [todos, setTodos] = useState([]);
-  const [message, setMessage] = useState(null);
+  const [todos, setTodos] = useState<TodoItem[]>([]);
+  const [message, setMessage] = useState('');
 
   function refreshTodos() {
-    retrieveAllTodosForUsernameApi(username, token)
+    retrieveAllTodosForUsernameApi(username)
       .then((res) => {
         setTodos(res.data);
       })
@@ -24,8 +23,8 @@ export default function ListTodoComponents() {
 
   useEffect(() => refreshTodos(), []);
 
-  function deleteTodo(id) {
-    deleteTodoApi(username, id, token)
+  function deleteTodo(id: number) {
+    deleteTodoApi(username, id)
       .then(() => {
         setMessage(`Delete ${id} Successfull`);
         refreshTodos();
@@ -33,7 +32,7 @@ export default function ListTodoComponents() {
       .catch((err) => console.log(err));
   }
 
-  function updateTodo(id) {
+  function updateTodo(id: number) {
     navigate(`/todo/${id}`);
   }
 
