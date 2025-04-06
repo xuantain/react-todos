@@ -1,13 +1,23 @@
-# FROM node:18-alpine AS builder
-FROM node:latest
+# Stage 1: Build the application
+FROM node:18-alpine as build
 
 WORKDIR /app
-
-# COPY package*.json ./
-# RUN npm install
-
+COPY package*.json ./
+RUN npm install
 COPY . .
+
+# For Create React App use:
 # RUN npm run build
 
+# For Vite use:
+RUN npm run build
+
+# Stage 2: Serve the application
+FROM node:18-alpine
+
+WORKDIR /app
+COPY --from=build /app .
+
+# For development with live reload
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]
