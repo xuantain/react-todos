@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { retrieveAllTodosForUsernameApi, deleteTodoApi, updateTodoApi } from "./api/TodoApiService"
 import { useAuth } from './security/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import moment from 'moment'
 
 export default function ListTodoComponents() {
 
@@ -65,7 +66,7 @@ export default function ListTodoComponents() {
                             <td>{todo.id}</td>
                             <td>{todo.description}</td>
                             <td><span className={todo.done ? 'btn-close' : ''}></span></td>
-                            <td>{todo.targetDate.toString()}</td>
+                            <td>{moment(todo.targetDate).format("DD/MM/YYYY")}</td>
                             <td><button className="btn btn-danger" 
                                     onClick={() => deleteTodo(todo.id)}>Delete</button></td>
                             <td><button className="btn btn-success" 

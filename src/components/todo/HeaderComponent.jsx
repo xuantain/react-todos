@@ -20,7 +20,7 @@ function HeaderComponent() {
                             <ul className="navbar-nav">
                                 <li className="nav-item">
                                     {isAuthenticated 
-                                        && <Link className="nav-link" to="/welcome/in28minutes">Home</Link>}
+                                        && <Link className="nav-link" to="/welcome/todo">Home</Link>}
                                     
                                 </li>
                                 <li className="nav-item">

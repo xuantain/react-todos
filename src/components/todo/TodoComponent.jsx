@@ -24,7 +24,9 @@ export default function TodoComponent() {
             retrieveTodoApi(username, id)
             .then(response => {
                 setDescription(response.data.description)
-                setTargetDate(response.data.targetDate)
+                const targetDate = moment(response.data.targetDate).format("yyyy-MM-DD")
+                
+                setTargetDate(targetDate)
             })
             .catch(error => console.log(error))
         }
@@ -37,13 +39,14 @@ export default function TodoComponent() {
             id: id,
             username: username,
             description: values.description,
-            targetDate: values.targetDate,
+            targetDate: moment(values.targetDate).format("YYYY-MM-DDTHH:mm:ssZ"),
             done: false
         }
 
         console.log(todo)
 
         if (id == -1) {
+            delete todo.id
             createTodoApi(username, todo)
             .then(response => {
                 navigate('/todos')
@@ -73,7 +76,6 @@ export default function TodoComponent() {
             errors.targetDate = 'Enter a target date'
         }
 
-        console.log(values)
         return errors
     }
 

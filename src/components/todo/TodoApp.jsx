@@ -57,7 +57,7 @@ export default function TodoApp () {
                         {/* Define all the undefined routes */}
                         <Route path='*' element={<ErrorComponent />} />
                     </Routes>
-                    <FooterComponent />{/* Define the general component for the layout */}
+                    {/* <FooterComponent />Define the general component for the layout */}
                 </BrowserRouter>
             </AuthProvider>
         </div>

@@ -18,22 +18,23 @@ export default function AuthProvider({ children }) {
     async function login(username, password) {
         
         try {
-            const baToken = 'Basic ' + window.btoa(username + ":" + password)
-            const response = await executeBasicAuthenticationService(baToken)
-            // const response = await executeJwtAuthenticationService(username, password)
+            // const baToken = 'Basic ' + window.btoa(username + ":" + password)
+            // const response = await executeBasicAuthenticationService(baToken)
+            const response = await executeJwtAuthenticationService(username, password)
             
             if (response.status==200) {
 
-                // const jwtToken = 'Bearer ' + response.data.token
+                const jwtToken = 'Bearer ' + response.data.token
                 
                 setAuthenticated(true)
                 setUsername(username)
-                setToken(baToken)
+                // setToken(baToken)
+                setToken(jwtToken)
 
                 apiClient.interceptors.request.use(
                     (config) => {
                         console.log('Use interceptors > to Set general configs for every requests');
-                        config.headers.Authorization = baToken
+                        config.headers.Authorization = jwtToken
                         return config
                     }
                 )
