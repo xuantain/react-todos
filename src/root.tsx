@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
-import logo from "@src/assets/react.svg";
+import logo from "@src/shared/assets/react.svg";
 import "./root.css";
 
 export function Layout({ children }: { children: ReactNode }) {

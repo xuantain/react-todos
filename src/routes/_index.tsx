@@ -1,4 +1,4 @@
-import logo from "@src/assets/react.svg";
+import logo from "@src/shared/assets/react.svg";
 
 export default function Page() {
   return (
