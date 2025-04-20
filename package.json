@@ -12,6 +12,7 @@
     "fix": "deves task fix"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.2.0",
     "@react-router/fs-routes": "^7.5.1",
     "@react-router/node": "^7.5.1",
     "class-variance-authority": "^0.7.1",
