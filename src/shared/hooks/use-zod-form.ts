@@ -2,7 +2,7 @@ import { useForm, type UseFormProps } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z, { ZodSchema } from "zod";
 
-type Values<S extends ZodSchema> = z.infer<S>;
+export type Values<S extends ZodSchema> = z.infer<S>;
 
 interface Props<S extends ZodSchema>
   extends Omit<UseFormProps<Values<S>>, "resolver"> {
