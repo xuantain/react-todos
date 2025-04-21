@@ -14,8 +14,8 @@ import { z, useZodForm } from "@src/shared/hooks/use-zod-form";
 export function TodoFrom() {
   const form = useZodForm({
     schema: z.object({
-      todo: z.string(),
-      dueAt: z.string(),
+      todo: z.string({ message: "Todo is required" }),
+      dueAt: z.string({ message: "Due At is required" }),
     }),
   });
 
