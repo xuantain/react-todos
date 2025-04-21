@@ -22,8 +22,8 @@ export function TodoFrom() {
     <Form {...form}>
       <form onSubmit={onSubmit} className="space-y-8">
         <FormField
-          control={form.control}
           name="todo"
+          control={form.control}
           render={({ field }) => (
             <FormGroup
               label="Todo"
@@ -35,8 +35,8 @@ export function TodoFrom() {
         />
 
         <FormField
-          control={form.control}
           name="todo"
+          control={form.control}
           render={({ field }) => (
             <FormGroup
               label="Due At"
