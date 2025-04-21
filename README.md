@@ -5,6 +5,10 @@ This project was bootstrapped with [Deves](https://deves.deno.dev/).
 It also use [React Router](https://reactrouter.com/) with
 [File Route Conventions](https://reactrouter.com/how-to/file-route-conventions).
 
+Build UI with ShadCN
+
+Handle Froms with React Hook Form and validate them with Zod
+
 ## Available Scripts
 
 In the project directory, you can run:
