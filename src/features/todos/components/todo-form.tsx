@@ -1,6 +1,3 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
 import {
   Form,
   FormControl,
@@ -12,17 +9,14 @@ import {
 } from "@src/shared/components/ui/form";
 import { Input } from "@src/shared/components/ui/input";
 import { Button } from "@src/shared/components/ui/button";
-
-const schema = z.object({
-  todo: z.string(),
-  dueAt: z.string(),
-});
-
-type Values = z.infer<typeof schema>;
+import { z, useZodForm } from "@src/shared/hooks/use-zod-form";
 
 export function TodoFrom() {
-  const form = useForm<Values>({
-    resolver: zodResolver(schema),
+  const form = useZodForm({
+    schema: z.object({
+      todo: z.string(),
+      dueAt: z.string(),
+    }),
   });
 
   const onSubmit = form.handleSubmit((values) => {
