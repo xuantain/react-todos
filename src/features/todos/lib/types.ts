@@ -1,6 +1,6 @@
 export interface TodoItem {
   id: string;
-  text: string;
+  todo: string;
   done: boolean;
   dueAt: Date;
 }
