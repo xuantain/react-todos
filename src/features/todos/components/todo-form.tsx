@@ -1,23 +1,16 @@
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@src/shared/components/ui/form";
+import { Form, FormField } from "@src/shared/components/ui/form";
 import { Input } from "@src/shared/components/ui/input";
 import { Button } from "@src/shared/components/ui/button";
 import { z, useZodForm } from "@src/shared/hooks/use-zod-form";
+import { FormGroup } from "@src/shared/components/form-group";
+
+const schema = z.object({
+  todo: z.string({ message: "Todo is required" }),
+  dueAt: z.string({ message: "Due At is required" }),
+});
 
 export function TodoFrom() {
-  const form = useZodForm({
-    schema: z.object({
-      todo: z.string({ message: "Todo is required" }),
-      dueAt: z.string({ message: "Due At is required" }),
-    }),
-  });
+  const form = useZodForm({ schema });
 
   const onSubmit = form.handleSubmit((values) => {
     console.log(values);
@@ -32,36 +25,25 @@ export function TodoFrom() {
           control={form.control}
           name="todo"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Todo</FormLabel>
-              <FormControl>
-                <Input placeholder="What do you want to do?" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is the description for `todo` field
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
+            <FormGroup
+              label="Todo"
+              description="This is the description for `todo` field"
+            >
+              <Input placeholder="What do you want to do?" {...field} />
+            </FormGroup>
           )}
         />
 
         <FormField
           control={form.control}
-          name="dueAt"
+          name="todo"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Due At</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="When will you finish this todo?"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>
-                This is the description for `dueAt` field
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
+            <FormGroup
+              label="Due At"
+              description="This is the description for `dueAt` field"
+            >
+              <Input placeholder="When will you finish this todo?" {...field} />
+            </FormGroup>
           )}
         />
 
