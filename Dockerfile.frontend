@@ -1,23 +1,20 @@
-# Stage 1: Build the application
-FROM node:22-alpine as build
-
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-
-# For Create React App use:
-# RUN npm run build
-
-# For Vite use:
-RUN npm run build
-
-# Stage 2: Serve the application
+# Use the official Node.js image
 FROM node:22-alpine
 
+# Set the working directory inside the container
 WORKDIR /app
-COPY --from=build /app .
 
-# For development with live reload
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application files
+COPY . .
+
+# Expose the application port
 EXPOSE 3000
+
+# Start the application using Vite's development server
 CMD ["npm", "run", "dev"]
