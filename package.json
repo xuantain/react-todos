@@ -5,11 +5,11 @@
   "type": "module",
   "deves": "react",
   "scripts": {
-    "dev": "deves task dev",
-    "build": "deves task build",
-    "start": "deves task start",
-    "check": "deves task check",
-    "fix": "deves task fix"
+    "dev": "react-router dev",
+    "build": "react-router typegen && tsc --noEmit && react-router build",
+    "start": "vite preview --port 3000",
+    "check": "deves lint && deves fmt --check",
+    "fix": "deves lint --fix && deves fmt"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
