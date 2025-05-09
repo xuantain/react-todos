@@ -9,4 +9,4 @@ services:
     volumes:
       - ../:/home/user/frontend
     ports:
-      - '53000:53000'
+      - "53000:53000"
