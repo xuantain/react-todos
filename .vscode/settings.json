@@ -1,6 +1,10 @@
 {
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
   "editor.formatOnSave": true,
   "emmet.triggerExpansionOnTab": true,
+
+  "tailwindCSS.classFunctions": ["cn"],
 
   "prettier.enable": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -10,5 +14,19 @@
     "source.fixAll.eslint": "explicit"
   },
 
-  "tailwindCSS.classFunctions": ["cn"]
+  "vim.useSystemClipboard": true,
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["p"],
+      "commands": ["editor.action.clipboardPasteAction"]
+    },
+    {
+      "before": ["u"],
+      "commands": ["undo"]
+    },
+    {
+      "before": ["<C-r>"],
+      "commands": ["redo"]
+    }
+  ]
 }
