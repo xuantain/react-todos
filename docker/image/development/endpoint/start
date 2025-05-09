@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -e
+
+ENDPOINT_DIR=$(dirname $(realpath $0))
+
+code \
+  --cli-data-dir $PROJECT_DIR/.vscode/docker/cli \
+  serve-web \
+  --host 0.0.0.0 \
+  --port 56789 \
+  --accept-server-license-terms \
+  --without-connection-token \
+  --server-data-dir $PROJECT_DIR/.vscode/docker/server &
+
+echo "Open http://localhost:$VSCODE_PORT to develop inside the container with Visual Studio Code directly in your browser."
+
+caddy run --config $ENDPOINT_DIR/configs/Caddyfile

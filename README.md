@@ -1,52 +1,55 @@
-# Deves React
+# Todo App Front End
 
-This project was bootstrapped with [Deves](https://deves.deno.dev/).
+## Installation
 
-It also use [React Router](https://reactrouter.com/) with
-[File Route Conventions](https://reactrouter.com/how-to/file-route-conventions).
+Before using this project, make sure you have `Docker CLI` version `1.27.0` or
+higher, with built-in `compose` support.
 
-Build UI with ShadCN
+```
+git clone https://github.com/xuantain/react-todos.git
+```
 
-Handle Froms with React Hook Form and validate them with Zod
+The command above clones the project into the `docker-vscode-frontend` folder.
+You can navigate to it and check out the scenarios below.
 
-## Available Scripts
+## Production
 
-In the project directory, you can run:
+Build the production image and run it.
 
-### `npm run dev`
+```
+docker compose -f docker/production.yml up --build
+```
 
-Runs the app in development mode.  
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload automatically when you make changes to the source files.  
-You may also see any lint errors in the console.
+## Development
 
-### `npm run build`
+Build the development image and run it with the host's `UID` and `GID`.
 
-Builds the app for production to the `dist` folder.  
-It correctly bundles React in production mode and optimizes the build for the
-best performance.
+```
+UID=$(id -u) GID=$(id -g) docker compose -f docker/development.yml up --build
+```
 
-The build is minified and the filenames include the hashes.  
-Your app is ready to be deployed!
+Open [http://localhost:53000](http://localhost:53000) to develop inside the
+container with Visual Studio Code directly in your browser.
 
-### `npm run start`
+Install project dependencies.
 
-Serves the production build locally so you can preview it before deploying.  
-This command runs the optimized build from the `dist` folder at
-[http://localhost:3000](http://localhost:3000) (or another configured port).  
-Use this to verify that your production build works as expected.
+```
+npm install
+```
 
-### `npm run check`
+Run the app in the development mode.
 
-Checks your code for linting and formatting issues.  
-This command runs both the linter and the code formatter in check mode, ensuring
-your code follows the project's style guidelines and is free of common errors.  
-No files are changed during this process; it only reports issues.
+```
+npm run dev
+```
 
-### `npm run fix`
+Open [http://localhost:3000/](http://localhost:3000/) to view it in your
+browser.
 
-Automatically fixes linting and formatting issues in your codebase.  
-This command will attempt to resolve any problems found by the linter and
-formatter, updating your files as needed.  
-Use this to quickly clean up your code before committing changes.
+## Related Projects
+
+- [Docker VSCode for Back End Development](https://github.com/VienDinhCom/docker-vscode-backend)
+- [Docker VSCode for Front End Development](https://github.com/VienDinhCom/docker-vscode-frontend)
+- [Docker VSCode for Full Stack Development](https://github.com/VienDinhCom/docker-vscode-fullstack)

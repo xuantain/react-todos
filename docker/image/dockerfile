@@ -1,0 +1,97 @@
+FROM alpine:3.21 AS base
+
+ARG USR=user
+ARG UID=1000
+ARG GID=1000
+ARG PRJ=frontend
+
+ENV PROJECT_NAME=${PRJ}
+ENV PROJECT_DIR=/home/${USR}/${PRJ}
+ENV API_URL=https://example.com/api
+
+# Nonroot User
+RUN apk add --no-cache shadow
+RUN getent passwd ${UID} && userdel $(getent passwd ${UID} | cut -d: -f1) || true
+RUN getent group ${GID} || groupadd --gid ${GID} ${USR}
+RUN useradd --uid ${UID} --gid ${GID} -m ${USR}
+
+# Production Dependencies
+RUN apk add --no-cache nodejs npm
+
+WORKDIR /home/${USR}/${PRJ}
+
+EXPOSE 3000
+
+
+# TARGET: DEVELOPMENT
+##################################################################
+FROM base AS development
+
+ARG VSCODE_PORT=53000
+
+ENV NODE_ENV=development
+ENV VSCODE_PORT=${VSCODE_PORT}
+
+# Bash Shell
+RUN apk add --no-cache bash bash-completion
+RUN echo '. /etc/bash/bash_completion.sh' >> /etc/bash/bashrc
+RUN echo "PS1='\[\e[0m\] \[\e[0;32m\]\w\[\e[0m\]> '" >> /etc/bash/bashrc
+RUN chsh -s $(which bash) ${USR}
+
+# VSCode CLI 
+RUN apk add --no-cache musl libgcc libstdc++ gcompat caddy
+RUN wget -q https://vscode.download.prss.microsoft.com/dbazure/download/stable/17baf841131aa23349f217ca7c570c76ee87b957/vscode_cli_alpine_x64_cli.tar.gz \
+    && tar -xzf vscode_cli_alpine_x64_cli.tar.gz \
+    && mv code /usr/bin/ \
+    && rm vscode_cli_alpine_x64_cli.tar.gz
+
+# Development Dependencies
+RUN apk add --no-cache coreutils findutils openssh-client curl git
+
+COPY ./docker/image/development/dotfiles/* /home/${USR}/
+COPY ./docker/image/development/endpoint /home/${USR}/endpoint
+
+RUN chown -R ${UID}:${UID} /home/${USR}/
+
+EXPOSE ${VSCODE_PORT} 
+
+USER ${USR}
+
+CMD ["../endpoint/start"]
+
+
+# TARGET: BUILDER
+##################################################################
+FROM base AS builder
+
+ENV NODE_ENV=development
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+RUN chown -R ${UID}:${UID} /home/${USR}/${PRJ}
+
+USER ${USR}
+
+RUN npm run build
+
+
+# TARGET: PRODUCTION 
+##################################################################
+FROM base AS production
+
+ENV NODE_ENV=production
+
+COPY --from=builder /home/${USR}/${PRJ}/dist .
+
+COPY ./docker/image/production/endpoint /home/${USR}/endpoint
+
+RUN chown -R ${UID}:${UID} /home/${USR}/
+
+RUN npm install -g serve
+
+USER ${USR}
+
+CMD ["../endpoint/start"]
